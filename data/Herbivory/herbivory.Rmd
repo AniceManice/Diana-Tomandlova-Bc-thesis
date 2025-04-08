@@ -1,0 +1,248 @@
+---
+title: "Herbivorie"
+author: "Anna Mrazova"
+date: "2025-03-11"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+
+# Used libraries
+
+```{r libraries}
+library(Matrix)
+library(lme4)
+library(data.table)
+library(dplyr)       
+library(ggplot2)     
+library(car)         
+library(rcompanion)
+library(emmeans)
+library(glmmTMB)
+library(MuMIn)
+```
+
+# 1: CUMULATIVE HERBIVORY
+
+## Load data
+
+```{r load-data}
+data <- read.csv("C:/Users/annam/OneDrive - Biologické centrum AV ČR, v. v. i/Anawork/Students/Diana Tomandlova/Bakalarka/data/herbivory.csv")
+datum_2_data <- data %>% filter(datum == 2)
+```
+
+## Visualize data
+
+```{r visual-cumulative}
+datum_2_data$treatment <- factor(datum_2_data$treatment, levels = c("kontrola", "meja", "ptaci", "meja a ptaci"))
+
+
+ggplot(datum_2_data, aes(x = treatment, y = herbivorie, fill = treatment)) +
+  geom_boxplot() +
+  labs(title = "Kumulativní herbivorie v závislosti na ošetření", x = "Ošetření", y = "Míra herbivorie") +
+  scale_y_continuous(breaks = seq(0, 0.8, by = 0.05)) +
+  scale_fill_manual(values = c(
+    "ptaci" = "orange",
+    "kontrola" = "#2F80ED",
+    "meja a ptaci" = "black",
+    "meja" = "red"
+  )) +
+  theme_minimal()
+
+```
+
+## Data check
+
+```{r data-check}
+shapiro_result <- shapiro.test(datum_2_data$herbivorie)
+print(shapiro_result)
+# normality violated -> non-parametric alternative:
+
+kruskal_result <- kruskal.test(herbivorie ~ treatment, data = datum_2_data)
+print(kruskal_result)
+```
+
+### Pairwise Comparisons
+
+```{r Pairwise}
+pairwise_result <- pairwise.wilcox.test(datum_2_data$herbivorie, datum_2_data$treatment, p.adjust.method = "bonferroni", exact = FALSE)
+print(pairwise_result)
+```
+
+## Cumulative herbivory summary
+
+### Overall explanation
+#### The dataset was filtered to use only data corresponding to 'datum = 2'.
+#### A boxplot was created to visualize the distribution of herbivory across different treatments.
+#### Normality was checked using the Shapiro-Wilk test.
+#### Since the assumptions for parametric tests were violated, a Kruskal-Wallis test was used to assess differences in herbivory across treatments.
+#### After finding a significant effect with the Kruskal-Wallis test, pairwise Wilcoxon tests were performed with Bonferroni correction to identify which specific treatment pairs differ significantly.
+
+### Results
+#### The pairwise comparisons indicate that the treatment "ptaci" significantly differs from the other treatments  ("kontrola", "meja", and "meja a ptaci") in terms of herbivory levels. This suggests that the exclusion of birds ("ptaci") has a significant effect on herbivory compared to other treatments.
+
+# 2: HERBIVORY DEPENDING ON TIME
+
+## Data filtering
+
+```{r Filtering}
+data_grouped <- data %>% group_by(treatment)
+```
+
+## Visualization
+```{r Visual-time}
+# Step 1: Create time variable
+data <- data %>%
+  mutate(day = case_when(
+    datum == 1 ~ 0,
+    datum == 2 ~ 30,
+    TRUE ~ NA_real_
+  ))
+
+# Step 2: Summarize data by day and treatment
+summary_data <- data %>%
+  group_by(day, treatment) %>%
+  summarise(
+    mean_herb = mean(herbivorie, na.rm = TRUE),
+    se_herb = sd(herbivorie, na.rm = TRUE) / sqrt(n()),
+    .groups = "drop"
+  )
+
+# Step 3: Plot with error bars
+ggplot(summary_data, aes(x = day, y = mean_herb, color = treatment, fill = treatment)) +
+  geom_line(size = 1.1) +
+  geom_ribbon(aes(ymin = mean_herb - se_herb, ymax = mean_herb + se_herb), alpha = 0.1, color = NA) +
+  labs(title = "Herbivorie v závisloti na čase a ošetření", x = "Čas", y = "Herbivorie (průměr ± SE)") +
+  scale_y_continuous(breaks = seq(0, 0.3, by = 0.05)) +
+  scale_color_manual(values = c(
+    "ptaci" = "orange",
+    "kontrola" = "#2F80ED",
+    "meja a ptaci" = "black",
+    "meja" = "red"
+  )) +
+  scale_fill_manual(values = c(
+    "ptaci" = "orange",
+    "kontrola" = "#2F80ED",
+    "meja a ptaci" = "black",
+    "meja" = "red"
+  )) +
+  theme_minimal()
+
+```
+
+## Best model selection
+
+```{r Model-fit}
+lme_model <- lmer(herbivorie ~ datum * treatment + (1|strom), data = data)
+
+residuals <- residuals(lme_model)
+shapiro_result <- shapiro.test(residuals)
+print(shapiro_result)
+plot(fitted(lme_model), residuals(lme_model),
+     main = "Residuals vs Fitted Values (herbivory)",
+     xlab = "Fitted Values", ylab = "Residuals", pch = 20)
+abline(h = 0, col = "red", lty = 2)
+
+# residuals are not normally distributed -> Fit Generalized Linear Mixed-Effects Model (GLMM)
+
+## As Gamma distribution can handle only positive values and we have 0s in our dataset, we will add a small constant (0.001) to all herbivory values to ensure positivity.
+
+data <- data %>% mutate(herbivorie = herbivorie + 0.001)
+glmm_model <- glmmTMB(herbivorie ~ day * treatment + (1|strom), data = data, family = Gamma(link = "log"))
+
+residuals_glmm <- residuals(glmm_model, type = "pearson")
+shapiro_result_glmm <- shapiro.test(residuals_glmm)
+print(shapiro_result_glmm)
+
+fitted_values <- fitted(glmm_model)
+ggplot(data.frame(fitted = fitted_values, residuals = residuals_glmm), aes(x = fitted, y = residuals)) +
+  geom_point() +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "red") +
+  labs(title = "Residuals vs Fitted Values", x = "Fitted Values", y = "Residuals") +
+  theme_minimal()
+
+# non normal distribution + residuals are spread unevenly
+
+## Fit Generalized Linear Mixed-Effects Model (GLMM) with logit transformation:
+
+# read the data again (to avoid the constan)
+data <- read.csv("C:/Users/annam/OneDrive - Biologické centrum AV ČR, v. v. i/Anawork/Students/Diana Tomandlova/Bakalarka/data/herbivory.csv")
+
+# Scale 'herbivorie' values to be strictly between 0 and 1 and apply Logit Transformation
+data <- data %>% mutate(herbivorie_scaled = (herbivorie - min(herbivorie)) / (max(herbivorie) - min(herbivorie)) * 0.998 + 0.001)
+data <- data %>% mutate(herbivorie_logit = log(herbivorie_scaled / (1 - herbivorie_scaled)))
+
+# Filter data by treatment
+data_grouped <- data %>% group_by(treatment)
+
+glmm_model_logit <- glmmTMB(herbivorie_logit ~ datum * treatment + (1 | strom), data = data, family = gaussian(link = "identity"))
+print(summary(glmm_model_logit))
+
+residuals_glmm_logit <- residuals(glmm_model_logit, type = "pearson")
+shapiro_result_glmm_logit <- shapiro.test(residuals_glmm_logit)
+print(shapiro_result_glmm_logit)
+
+# the data are still not normally distributed. However, the test statistic has improved compared to earlier models, suggesting a partial improvement in residual normality.
+
+# Residuals
+fitted_values_logit <- fitted(glmm_model_logit)
+ggplot(data.frame(fitted = fitted_values_logit, residuals = residuals_glmm_logit), aes(x = fitted, y = residuals)) +
+  geom_point() +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "red") +
+  labs(title = "Residuals vs Fitted Values (Logit-Transformed GLMM)", x = "Fitted Values", y = "Residuals") +
+  theme_minimal()
+
+# there is still a visible spread with some clustering and high outliers. # This suggests that the residuals are not perfectly homoscedastic, meaning variance is not entirely constant. However, compared to previous attempts, the residuals appear less skewed, indicating a better fit with the logit-transformed response.
+```
+
+## Model with logit transformation and Gaussian distribution - selection
+
+```{r Model-selection}
+glmm_model_logit <- glmmTMB(herbivorie_logit ~ datum * treatment + (1 | strom),
+                            data = data, family = gaussian(link = "identity"))
+reduced1 <- update(glmm_model_logit, . ~ . - datum)                 
+reduced2 <- update(glmm_model_logit, . ~ . - treatment)              
+reduced3 <- update(glmm_model_logit, . ~ . - datum:treatment)
+null <- glmmTMB(herbivorie_logit ~ 1 + (1|strom),  
+                    data = data, family = gaussian(link = "identity"))
+ 
+models_list <- list(full = glmm_model_logit, reduced1 = reduced1, reduced2 = reduced2, 
+                    reduced3 = reduced3, null = null)
+
+model_selection <- model.sel(models_list, rank = AICc)
+print(model_selection)
+
+# The model with the lowest AICc is reduced2 (datum and interaction removed) -> it has the best balance of fit and complexity. However, full and reduced1 (treatment removed) are also competitive with ΔAICc < 2, meaning they are plausible alternatives. And as it is biologicaly relevant, and it has a nice fit, we can stay with full model
+
+print(summary(glmm_model_logit))
+
+emm_glmm_logit <- emmeans(glmm_model_logit, pairwise ~ datum | treatment, type = "response")
+print(emm_glmm_logit)
+```
+
+## Herbivory vs Time summary 
+
+### Model comparison and justification:
+#### Throughout the second analysis, we tested multiple approaches to model the effect of treatment and time on herbivory:
+#### 1. **Linear Mixed-Effects Model (LMM)**: Initially, we attempted to use an LMM with a Gaussian distribution. However, the Shapiro-Wilk test on the residuals indicated a violation of normality, and the residual plots showed heteroscedasticity.
+#### 2. **GLMM with Gamma Distribution**: We tried a GLMM with a Gamma distribution to address non-normality. This model encountered issues with zero values, requiring a small constant to be added. The resulting residuals still showed substantial deviation from normality, and the fit was not satisfactory.
+#### 3. **GLMM with Beta Distribution**: We then used a Beta GLMM, which requires values strictly between 0 and 1. Despite scaling the data, the residual analysis indicated that the model was not adequately capturing the variability in the data.
+#### 4. **Logit-Transformed GLMM with Gaussian Family**: Finally, we applied a logit transformation to the response variable and used a Gaussian GLMM. This approach resulted in improved residual normality (Shapiro-Wilk p-value = 0.035) and provided a reasonable model fit. Although the residuals are not perfectly normal, they represent a significant improvement compared to previous models.
+
+#### Despite the relatively high AIC for the logit-transformed model, it provided the best balance between interpretability and residual normality. The decision to use the logit-transformed GLMM was based on:
+#### - **Improved Residual Normality**: The residuals showed a better fit with fewer extreme deviations.
+#### - **Model Interpretability**: The logit transformation allowed us to deal with boundary issues, making the response more suitable for a Gaussian family.
+#### - **Simplicity**: The Gaussian family with an identity link was simpler and more interpretable compared to other complex distributions.
+
+#### Therefore, we chose to proceed with the logit-transformed GLMM using a Gaussian distribution, acknowledging that while it is not perfect, it represents the best compromise among the models we tried.
+
+### Model selection:
+#### Finally, we did the model selection using AICc function and proved that the full model applies for a good fit and despite reduced1 and 2 models were also well fitting, we decided to use the full model for biological value.
+
+### Results
+#### The results show that overall Datum (time) has a significant effect on herbivory change. In other words, that herbivory significantly increasess with time. The overall effect of treatment bird exclusion has a significant negative effect on herbivory. In other words, that after bird exclusion, herbivory increases. And finally, the interaction between time and treatment bird exclusion has signifficant strong possitive effect on herbivory. In other words, that the herbivory significantly increases with time for bird exclusion effect.
+
+#### According to emmeans results, you see that time has an significant effect on herbivory for all the treatments.

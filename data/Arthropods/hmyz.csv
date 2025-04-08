@@ -1,0 +1,481 @@
+strom;guildy;pocet;cas;treatment
+M1;predatori;2;zacatek;meja
+M1;listozravi clenovci;3;zacatek;meja
+M1;mizu sajici clenovci;0;zacatek;meja
+M1;ostatni;0;zacatek;meja
+M2;predatori;0;zacatek;meja
+M2;listozravi clenovci;10;zacatek;meja
+M2;mizu sajici clenovci;6;zacatek;meja
+M2;ostatni;0;zacatek;meja
+M3;predatori;2;zacatek;meja
+M3;listozravi clenovci;1;zacatek;meja
+M3;mizu sajici clenovci;1;zacatek;meja
+M3;ostatni;1;zacatek;meja
+M4;predatori;4;zacatek;meja
+M4;listozravi clenovci;0;zacatek;meja
+M4;mizu sajici clenovci;1;zacatek;meja
+M4;ostatni;0;zacatek;meja
+M5;predatori;2;zacatek;meja
+M5;listozravi clenovci;1;zacatek;meja
+M5;mizu sajici clenovci;2;zacatek;meja
+M5;ostatni;0;zacatek;meja
+M6;predatori;2;zacatek;meja
+M6;listozravi clenovci;3;zacatek;meja
+M6;mizu sajici clenovci;0;zacatek;meja
+M6;ostatni;1;zacatek;meja
+M7;predatori;3;zacatek;meja
+M7;listozravi clenovci;4;zacatek;meja
+M7;mizu sajici clenovci;1;zacatek;meja
+M7;ostatni;0;zacatek;meja
+M8;predatori;4;zacatek;meja
+M8;listozravi clenovci;2;zacatek;meja
+M8;mizu sajici clenovci;1;zacatek;meja
+M8;ostatni;1;zacatek;meja
+M9;predatori;8;zacatek;meja
+M9;listozravi clenovci;2;zacatek;meja
+M9;mizu sajici clenovci;1;zacatek;meja
+M9;ostatni;3;zacatek;meja
+M10;predatori;4;zacatek;meja
+M10;listozravi clenovci;3;zacatek;meja
+M10;mizu sajici clenovci;1;zacatek;meja
+M10;ostatni;0;zacatek;meja
+M11;predatori;1;zacatek;meja
+M11;listozravi clenovci;1;zacatek;meja
+M11;mizu sajici clenovci;0;zacatek;meja
+M11;ostatni;0;zacatek;meja
+M12;predatori;1;zacatek;meja
+M12;listozravi clenovci;0;zacatek;meja
+M12;mizu sajici clenovci;1;zacatek;meja
+M12;ostatni;2;zacatek;meja
+M13;predatori;6;zacatek;meja
+M13;listozravi clenovci;1;zacatek;meja
+M13;mizu sajici clenovci;33;zacatek;meja
+M13;ostatni;0;zacatek;meja
+M14;predatori;8;zacatek;meja
+M14;listozravi clenovci;3;zacatek;meja
+M14;mizu sajici clenovci;0;zacatek;meja
+M14;ostatni;2;zacatek;meja
+M15;predatori;3;zacatek;meja
+M15;listozravi clenovci;1;zacatek;meja
+M15;mizu sajici clenovci;0;zacatek;meja
+M15;ostatni;1;zacatek;meja
+M1;predatori;2;konec;meja
+M1;listozravi clenovci;0;konec;meja
+M1;mizu sajici clenovci;5;konec;meja
+M1;ostatni;1;konec;meja
+M2;predatori;0;konec;meja
+M2;listozravi clenovci;0;konec;meja
+M2;mizu sajici clenovci;2;konec;meja
+M2;ostatni;3;konec;meja
+M3;predatori;3;konec;meja
+M3;listozravi clenovci;0;konec;meja
+M3;mizu sajici clenovci;0;konec;meja
+M3;ostatni;0;konec;meja
+M4;predatori;3;konec;meja
+M4;listozravi clenovci;0;konec;meja
+M4;mizu sajici clenovci;0;konec;meja
+M4;ostatni;1;konec;meja
+M5;predatori;1;konec;meja
+M5;listozravi clenovci;0;konec;meja
+M5;mizu sajici clenovci;3;konec;meja
+M5;ostatni;2;konec;meja
+M6;predatori;6;konec;meja
+M6;listozravi clenovci;0;konec;meja
+M6;mizu sajici clenovci;0;konec;meja
+M6;ostatni;4;konec;meja
+M7;predatori;3;konec;meja
+M7;listozravi clenovci;1;konec;meja
+M7;mizu sajici clenovci;4;konec;meja
+M7;ostatni;3;konec;meja
+M8;predatori;12;konec;meja
+M8;listozravi clenovci;5;konec;meja
+M8;mizu sajici clenovci;1;konec;meja
+M8;ostatni;1;konec;meja
+M9;predatori;1;konec;meja
+M9;listozravi clenovci;0;konec;meja
+M9;mizu sajici clenovci;2;konec;meja
+M9;ostatni;0;konec;meja
+M10;predatori;1;konec;meja
+M10;listozravi clenovci;6;konec;meja
+M10;mizu sajici clenovci;3;konec;meja
+M10;ostatni;2;konec;meja
+M11;predatori;2;konec;meja
+M11;listozravi clenovci;5;konec;meja
+M11;mizu sajici clenovci;1;konec;meja
+M11;ostatni;3;konec;meja
+M12;predatori;10;konec;meja
+M12;listozravi clenovci;3;konec;meja
+M12;mizu sajici clenovci;0;konec;meja
+M12;ostatni;0;konec;meja
+M13;predatori;0;konec;meja
+M13;listozravi clenovci;3;konec;meja
+M13;mizu sajici clenovci;0;konec;meja
+M13;ostatni;4;konec;meja
+M14;predatori;1;konec;meja
+M14;listozravi clenovci;0;konec;meja
+M14;mizu sajici clenovci;4;konec;meja
+M14;ostatni;0;konec;meja
+M15;predatori;1;konec;meja
+M15;listozravi clenovci;1;konec;meja
+M15;mizu sajici clenovci;0;konec;meja
+M15;ostatni;4;konec;meja
+K1;predatori;2;zacatek;kontrola
+K1;listozravi clenovci;1;zacatek;kontrola
+K1;mizu sajici clenovci;0;zacatek;kontrola
+K1;ostatni;0;zacatek;kontrola
+K2;predatori;0;zacatek;kontrola
+K2;listozravi clenovci;1;zacatek;kontrola
+K2;mizu sajici clenovci;2;zacatek;kontrola
+K2;ostatni;0;zacatek;kontrola
+K3;predatori;6;zacatek;kontrola
+K3;listozravi clenovci;2;zacatek;kontrola
+K3;mizu sajici clenovci;0;zacatek;kontrola
+K3;ostatni;0;zacatek;kontrola
+K4;predatori;1;zacatek;kontrola
+K4;listozravi clenovci;0;zacatek;kontrola
+K4;mizu sajici clenovci;5;zacatek;kontrola
+K4;ostatni;1;zacatek;kontrola
+K5;predatori;0;zacatek;kontrola
+K5;listozravi clenovci;2;zacatek;kontrola
+K5;mizu sajici clenovci;3;zacatek;kontrola
+K5;ostatni;0;zacatek;kontrola
+K6;predatori;1;zacatek;kontrola
+K6;listozravi clenovci;2;zacatek;kontrola
+K6;mizu sajici clenovci;1;zacatek;kontrola
+K6;ostatni;0;zacatek;kontrola
+K7;predatori;2;zacatek;kontrola
+K7;listozravi clenovci;1;zacatek;kontrola
+K7;mizu sajici clenovci;0;zacatek;kontrola
+K7;ostatni;1;zacatek;kontrola
+K8;predatori;0;zacatek;kontrola
+K8;listozravi clenovci;1;zacatek;kontrola
+K8;mizu sajici clenovci;1;zacatek;kontrola
+K8;ostatni;1;zacatek;kontrola
+K9;predatori;2;zacatek;kontrola
+K9;listozravi clenovci;5;zacatek;kontrola
+K9;mizu sajici clenovci;1;zacatek;kontrola
+K9;ostatni;3;zacatek;kontrola
+K10;predatori;4;zacatek;kontrola
+K10;listozravi clenovci;2;zacatek;kontrola
+K10;mizu sajici clenovci;0;zacatek;kontrola
+K10;ostatni;0;zacatek;kontrola
+K11;predatori;2;zacatek;kontrola
+K11;listozravi clenovci;4;zacatek;kontrola
+K11;mizu sajici clenovci;1;zacatek;kontrola
+K11;ostatni;3;zacatek;kontrola
+K12;predatori;1;zacatek;kontrola
+K12;listozravi clenovci;0;zacatek;kontrola
+K12;mizu sajici clenovci;1;zacatek;kontrola
+K12;ostatni;3;zacatek;kontrola
+K13;predatori;3;zacatek;kontrola
+K13;listozravi clenovci;0;zacatek;kontrola
+K13;mizu sajici clenovci;4;zacatek;kontrola
+K13;ostatni;0;zacatek;kontrola
+K14;predatori;3;zacatek;kontrola
+K14;listozravi clenovci;6;zacatek;kontrola
+K14;mizu sajici clenovci;0;zacatek;kontrola
+K14;ostatni;0;zacatek;kontrola
+K15;predatori;3;zacatek;kontrola
+K15;listozravi clenovci;1;zacatek;kontrola
+K15;mizu sajici clenovci;0;zacatek;kontrola
+K15;ostatni;2;zacatek;kontrola
+K1;predatori;3;konec;kontrola
+K1;listozravi clenovci;0;konec;kontrola
+K1;mizu sajici clenovci;2;konec;kontrola
+K1;ostatni;0;konec;kontrola
+K2;predatori;5;konec;kontrola
+K2;listozravi clenovci;3;konec;kontrola
+K2;mizu sajici clenovci;1;konec;kontrola
+K2;ostatni;0;konec;kontrola
+K3;predatori;1;konec;kontrola
+K3;listozravi clenovci;0;konec;kontrola
+K3;mizu sajici clenovci;2;konec;kontrola
+K3;ostatni;0;konec;kontrola
+K4;predatori;6;konec;kontrola
+K4;listozravi clenovci;1;konec;kontrola
+K4;mizu sajici clenovci;4;konec;kontrola
+K4;ostatni;0;konec;kontrola
+K5;predatori;2;konec;kontrola
+K5;listozravi clenovci;2;konec;kontrola
+K5;mizu sajici clenovci;0;konec;kontrola
+K5;ostatni;1;konec;kontrola
+K6;predatori;0;konec;kontrola
+K6;listozravi clenovci;0;konec;kontrola
+K6;mizu sajici clenovci;2;konec;kontrola
+K6;ostatni;0;konec;kontrola
+K7;predatori;3;konec;kontrola
+K7;listozravi clenovci;0;konec;kontrola
+K7;mizu sajici clenovci;1;konec;kontrola
+K7;ostatni;0;konec;kontrola
+K8;predatori;0;konec;kontrola
+K8;listozravi clenovci;0;konec;kontrola
+K8;mizu sajici clenovci;3;konec;kontrola
+K8;ostatni;5;konec;kontrola
+K9;predatori;2;konec;kontrola
+K9;listozravi clenovci;2;konec;kontrola
+K9;mizu sajici clenovci;3;konec;kontrola
+K9;ostatni;0;konec;kontrola
+K10;predatori;8;konec;kontrola
+K10;listozravi clenovci;2;konec;kontrola
+K10;mizu sajici clenovci;5;konec;kontrola
+K10;ostatni;0;konec;kontrola
+K11;predatori;6;konec;kontrola
+K11;listozravi clenovci;8;konec;kontrola
+K11;mizu sajici clenovci;3;konec;kontrola
+K11;ostatni;2;konec;kontrola
+K12;predatori;6;konec;kontrola
+K12;listozravi clenovci;2;konec;kontrola
+K12;mizu sajici clenovci;0;konec;kontrola
+K12;ostatni;0;konec;kontrola
+K13;predatori;2;konec;kontrola
+K13;listozravi clenovci;10;konec;kontrola
+K13;mizu sajici clenovci;3;konec;kontrola
+K13;ostatni;0;konec;kontrola
+K14;predatori;1;konec;kontrola
+K14;listozravi clenovci;0;konec;kontrola
+K14;mizu sajici clenovci;0;konec;kontrola
+K14;ostatni;5;konec;kontrola
+K15;predatori;1;konec;kontrola
+K15;listozravi clenovci;0;konec;kontrola
+K15;mizu sajici clenovci;2;konec;kontrola
+K15;ostatni;0;konec;kontrola
+P1;predatori;2;zacatek;ptaci
+P1;listozravi clenovci;0;zacatek;ptaci
+P1;mizu sajici clenovci;0;zacatek;ptaci
+P1;ostatni;0;zacatek;ptaci
+P2;predatori;1;zacatek;ptaci
+P2;listozravi clenovci;1;zacatek;ptaci
+P2;mizu sajici clenovci;1;zacatek;ptaci
+P2;ostatni;0;zacatek;ptaci
+P3;predatori;0;zacatek;ptaci
+P3;listozravi clenovci;1;zacatek;ptaci
+P3;mizu sajici clenovci;1;zacatek;ptaci
+P3;ostatni;0;zacatek;ptaci
+P4;predatori;1;zacatek;ptaci
+P4;listozravi clenovci;1;zacatek;ptaci
+P4;mizu sajici clenovci;2;zacatek;ptaci
+P4;ostatni;0;zacatek;ptaci
+P5;predatori;1;zacatek;ptaci
+P5;listozravi clenovci;0;zacatek;ptaci
+P5;mizu sajici clenovci;2;zacatek;ptaci
+P5;ostatni;0;zacatek;ptaci
+P6;predatori;0;zacatek;ptaci
+P6;listozravi clenovci;3;zacatek;ptaci
+P6;mizu sajici clenovci;10;zacatek;ptaci
+P6;ostatni;0;zacatek;ptaci
+P7;predatori;6;zacatek;ptaci
+P7;listozravi clenovci;2;zacatek;ptaci
+P7;mizu sajici clenovci;3;zacatek;ptaci
+P7;ostatni;0;zacatek;ptaci
+P8;predatori;0;zacatek;ptaci
+P8;listozravi clenovci;2;zacatek;ptaci
+P8;mizu sajici clenovci;0;zacatek;ptaci
+P8;ostatni;0;zacatek;ptaci
+P9;predatori;6;zacatek;ptaci
+P9;listozravi clenovci;9;zacatek;ptaci
+P9;mizu sajici clenovci;2;zacatek;ptaci
+P9;ostatni;0;zacatek;ptaci
+P10;predatori;1;zacatek;ptaci
+P10;listozravi clenovci;4;zacatek;ptaci
+P10;mizu sajici clenovci;0;zacatek;ptaci
+P10;ostatni;0;zacatek;ptaci
+P11;predatori;1;zacatek;ptaci
+P11;listozravi clenovci;0;zacatek;ptaci
+P11;mizu sajici clenovci;7;zacatek;ptaci
+P11;ostatni;0;zacatek;ptaci
+P12;predatori;2;zacatek;ptaci
+P12;listozravi clenovci;1;zacatek;ptaci
+P12;mizu sajici clenovci;0;zacatek;ptaci
+P12;ostatni;0;zacatek;ptaci
+P13;predatori;0;zacatek;ptaci
+P13;listozravi clenovci;2;zacatek;ptaci
+P13;mizu sajici clenovci;2;zacatek;ptaci
+P13;ostatni;3;zacatek;ptaci
+P14;predatori;3;zacatek;ptaci
+P14;listozravi clenovci;1;zacatek;ptaci
+P14;mizu sajici clenovci;0;zacatek;ptaci
+P14;ostatni;0;zacatek;ptaci
+P15;predatori;6;zacatek;ptaci
+P15;listozravi clenovci;4;zacatek;ptaci
+P15;mizu sajici clenovci;3;zacatek;ptaci
+P15;ostatni;2;zacatek;ptaci
+P1;predatori;3;konec;ptaci
+P1;listozravi clenovci;5;konec;ptaci
+P1;mizu sajici clenovci;2;konec;ptaci
+P1;ostatni;1;konec;ptaci
+P2;predatori;0;konec;ptaci
+P2;listozravi clenovci;0;konec;ptaci
+P2;mizu sajici clenovci;2;konec;ptaci
+P2;ostatni;1;konec;ptaci
+P3;predatori;0;konec;ptaci
+P3;listozravi clenovci;0;konec;ptaci
+P3;mizu sajici clenovci;1;konec;ptaci
+P3;ostatni;3;konec;ptaci
+P4;predatori;3;konec;ptaci
+P4;listozravi clenovci;0;konec;ptaci
+P4;mizu sajici clenovci;0;konec;ptaci
+P4;ostatni;0;konec;ptaci
+P5;predatori;1;konec;ptaci
+P5;listozravi clenovci;0;konec;ptaci
+P5;mizu sajici clenovci;5;konec;ptaci
+P5;ostatni;0;konec;ptaci
+P6;predatori;2;konec;ptaci
+P6;listozravi clenovci;0;konec;ptaci
+P6;mizu sajici clenovci;3;konec;ptaci
+P6;ostatni;0;konec;ptaci
+P7;predatori;1;konec;ptaci
+P7;listozravi clenovci;3;konec;ptaci
+P7;mizu sajici clenovci;6;konec;ptaci
+P7;ostatni;0;konec;ptaci
+P8;predatori;1;konec;ptaci
+P8;listozravi clenovci;0;konec;ptaci
+P8;mizu sajici clenovci;1;konec;ptaci
+P8;ostatni;1;konec;ptaci
+P9;predatori;5;konec;ptaci
+P9;listozravi clenovci;3;konec;ptaci
+P9;mizu sajici clenovci;0;konec;ptaci
+P9;ostatni;0;konec;ptaci
+P10;predatori;2;konec;ptaci
+P10;listozravi clenovci;0;konec;ptaci
+P10;mizu sajici clenovci;2;konec;ptaci
+P10;ostatni;1;konec;ptaci
+P11;predatori;4;konec;ptaci
+P11;listozravi clenovci;2;konec;ptaci
+P11;mizu sajici clenovci;0;konec;ptaci
+P11;ostatni;0;konec;ptaci
+P12;predatori;3;konec;ptaci
+P12;listozravi clenovci;5;konec;ptaci
+P12;mizu sajici clenovci;2;konec;ptaci
+P12;ostatni;1;konec;ptaci
+P13;predatori;0;konec;ptaci
+P13;listozravi clenovci;0;konec;ptaci
+P13;mizu sajici clenovci;2;konec;ptaci
+P13;ostatni;3;konec;ptaci
+P14;predatori;1;konec;ptaci
+P14;listozravi clenovci;1;konec;ptaci
+P14;mizu sajici clenovci;1;konec;ptaci
+P14;ostatni;1;konec;ptaci
+P15;predatori;1;konec;ptaci
+P15;listozravi clenovci;0;konec;ptaci
+P15;mizu sajici clenovci;1;konec;ptaci
+P15;ostatni;0;konec;ptaci
+M+P1;predatori;1;zacatek;meja+ptaci
+M+P1;listozravi clenovci;1;zacatek;meja+ptaci
+M+P1;mizu sajici clenovci;5;zacatek;meja+ptaci
+M+P1;ostatni;0;zacatek;meja+ptaci
+M+P2;predatori;0;zacatek;meja+ptaci
+M+P2;listozravi clenovci;3;zacatek;meja+ptaci
+M+P2;mizu sajici clenovci;4;zacatek;meja+ptaci
+M+P2;ostatni;0;zacatek;meja+ptaci
+M+P3;predatori;12;zacatek;meja+ptaci
+M+P3;listozravi clenovci;0;zacatek;meja+ptaci
+M+P3;mizu sajici clenovci;5;zacatek;meja+ptaci
+M+P3;ostatni;3;zacatek;meja+ptaci
+M+P4;predatori;4;zacatek;meja+ptaci
+M+P4;listozravi clenovci;5;zacatek;meja+ptaci
+M+P4;mizu sajici clenovci;10;zacatek;meja+ptaci
+M+P4;ostatni;0;zacatek;meja+ptaci
+M+P5;predatori;2;zacatek;meja+ptaci
+M+P5;listozravi clenovci;4;zacatek;meja+ptaci
+M+P5;mizu sajici clenovci;2;zacatek;meja+ptaci
+M+P5;ostatni;0;zacatek;meja+ptaci
+M+P6;predatori;4;zacatek;meja+ptaci
+M+P6;listozravi clenovci;10;zacatek;meja+ptaci
+M+P6;mizu sajici clenovci;5;zacatek;meja+ptaci
+M+P6;ostatni;6;zacatek;meja+ptaci
+M+P7;predatori;2;zacatek;meja+ptaci
+M+P7;listozravi clenovci;0;zacatek;meja+ptaci
+M+P7;mizu sajici clenovci;5;zacatek;meja+ptaci
+M+P7;ostatni;0;zacatek;meja+ptaci
+M+P8;predatori;0;zacatek;meja+ptaci
+M+P8;listozravi clenovci;0;zacatek;meja+ptaci
+M+P8;mizu sajici clenovci;1;zacatek;meja+ptaci
+M+P8;ostatni;1;zacatek;meja+ptaci
+M+P9;predatori;3;zacatek;meja+ptaci
+M+P9;listozravi clenovci;0;zacatek;meja+ptaci
+M+P9;mizu sajici clenovci;1;zacatek;meja+ptaci
+M+P9;ostatni;0;zacatek;meja+ptaci
+M+P10;predatori;0;zacatek;meja+ptaci
+M+P10;listozravi clenovci;2;zacatek;meja+ptaci
+M+P10;mizu sajici clenovci;3;zacatek;meja+ptaci
+M+P10;ostatni;0;zacatek;meja+ptaci
+M+P11;predatori;0;zacatek;meja+ptaci
+M+P11;listozravi clenovci;0;zacatek;meja+ptaci
+M+P11;mizu sajici clenovci;2;zacatek;meja+ptaci
+M+P11;ostatni;0;zacatek;meja+ptaci
+M+P12;predatori;0;zacatek;meja+ptaci
+M+P12;listozravi clenovci;2;zacatek;meja+ptaci
+M+P12;mizu sajici clenovci;1;zacatek;meja+ptaci
+M+P12;ostatni;0;zacatek;meja+ptaci
+M+P13;predatori;1;zacatek;meja+ptaci
+M+P13;listozravi clenovci;0;zacatek;meja+ptaci
+M+P13;mizu sajici clenovci;2;zacatek;meja+ptaci
+M+P13;ostatni;0;zacatek;meja+ptaci
+M+P14;predatori;3;zacatek;meja+ptaci
+M+P14;listozravi clenovci;1;zacatek;meja+ptaci
+M+P14;mizu sajici clenovci;1;zacatek;meja+ptaci
+M+P14;ostatni;0;zacatek;meja+ptaci
+M+P15;predatori;1;zacatek;meja+ptaci
+M+P15;listozravi clenovci;1;zacatek;meja+ptaci
+M+P15;mizu sajici clenovci;0;zacatek;meja+ptaci
+M+P15;ostatni;1;zacatek;meja+ptaci
+M+P1;predatori;2;konec;meja+ptaci
+M+P1;listozravi clenovci;0;konec;meja+ptaci
+M+P1;mizu sajici clenovci;3;konec;meja+ptaci
+M+P1;ostatni;0;konec;meja+ptaci
+M+P2;predatori;3;konec;meja+ptaci
+M+P2;listozravi clenovci;0;konec;meja+ptaci
+M+P2;mizu sajici clenovci;4;konec;meja+ptaci
+M+P2;ostatni;0;konec;meja+ptaci
+M+P3;predatori;8;konec;meja+ptaci
+M+P3;listozravi clenovci;0;konec;meja+ptaci
+M+P3;mizu sajici clenovci;0;konec;meja+ptaci
+M+P3;ostatni;4;konec;meja+ptaci
+M+P4;predatori;3;konec;meja+ptaci
+M+P4;listozravi clenovci;0;konec;meja+ptaci
+M+P4;mizu sajici clenovci;2;konec;meja+ptaci
+M+P4;ostatni;0;konec;meja+ptaci
+M+P5;predatori;3;konec;meja+ptaci
+M+P5;listozravi clenovci;0;konec;meja+ptaci
+M+P5;mizu sajici clenovci;20;konec;meja+ptaci
+M+P5;ostatni;0;konec;meja+ptaci
+M+P6;predatori;3;konec;meja+ptaci
+M+P6;listozravi clenovci;0;konec;meja+ptaci
+M+P6;mizu sajici clenovci;2;konec;meja+ptaci
+M+P6;ostatni;1;konec;meja+ptaci
+M+P7;predatori;1;konec;meja+ptaci
+M+P7;listozravi clenovci;0;konec;meja+ptaci
+M+P7;mizu sajici clenovci;2;konec;meja+ptaci
+M+P7;ostatni;1;konec;meja+ptaci
+M+P8;predatori;13;konec;meja+ptaci
+M+P8;listozravi clenovci;0;konec;meja+ptaci
+M+P8;mizu sajici clenovci;20;konec;meja+ptaci
+M+P8;ostatni;2;konec;meja+ptaci
+M+P9;predatori;4;konec;meja+ptaci
+M+P9;listozravi clenovci;0;konec;meja+ptaci
+M+P9;mizu sajici clenovci;6;konec;meja+ptaci
+M+P9;ostatni;0;konec;meja+ptaci
+M+P10;predatori;1;konec;meja+ptaci
+M+P10;listozravi clenovci;0;konec;meja+ptaci
+M+P10;mizu sajici clenovci;2;konec;meja+ptaci
+M+P10;ostatni;0;konec;meja+ptaci
+M+P11;predatori;8;konec;meja+ptaci
+M+P11;listozravi clenovci;9;konec;meja+ptaci
+M+P11;mizu sajici clenovci;4;konec;meja+ptaci
+M+P11;ostatni;0;konec;meja+ptaci
+M+P12;predatori;3;konec;meja+ptaci
+M+P12;listozravi clenovci;0;konec;meja+ptaci
+M+P12;mizu sajici clenovci;2;konec;meja+ptaci
+M+P12;ostatni;0;konec;meja+ptaci
+M+P13;predatori;3;konec;meja+ptaci
+M+P13;listozravi clenovci;0;konec;meja+ptaci
+M+P13;mizu sajici clenovci;1;konec;meja+ptaci
+M+P13;ostatni;1;konec;meja+ptaci
+M+P14;predatori;5;konec;meja+ptaci
+M+P14;listozravi clenovci;0;konec;meja+ptaci
+M+P14;mizu sajici clenovci;3;konec;meja+ptaci
+M+P14;ostatni;0;konec;meja+ptaci
+M+P15;predatori;1;konec;meja+ptaci
+M+P15;listozravi clenovci;0;konec;meja+ptaci
+M+P15;mizu sajici clenovci;2;konec;meja+ptaci
+M+P15;ostatni;1;konec;meja+ptaci

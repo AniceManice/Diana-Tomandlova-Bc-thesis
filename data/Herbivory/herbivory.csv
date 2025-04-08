@@ -1,0 +1,121 @@
+datum,strom,treatment,herbivorie
+1,1,meja,0
+1,2,meja,0
+1,3,meja,0.038517
+1,4,meja,0.027043
+1,5,meja,0.000335
+1,6,meja,0.044506
+1,7,meja,0.01109
+1,8,meja,0.008805
+1,9,meja,0.009958614
+1,10,meja,0.050931
+1,11,meja,0.07797
+1,12,meja,0
+1,13,meja,0
+1,14,meja,0.056891
+1,15,meja,0.014694
+1,16,kontrola,0
+1,17,kontrola,0.04088
+1,18,kontrola,0.078623
+1,19,kontrola,0.005469
+1,20,kontrola,0
+1,21,kontrola,0.0646
+1,22,kontrola,0.273204
+1,23,kontrola,0.003356
+1,24,kontrola,0.037127
+1,25,kontrola,0.004314
+1,26,kontrola,0.009396
+1,27,kontrola,0.037443
+1,28,kontrola,0.021357
+1,29,kontrola,0.009166
+1,30,kontrola,0.042319
+1,31,ptaci,0
+1,32,ptaci,0.024926
+1,33,ptaci,0.011172
+1,34,ptaci,0.022384
+1,35,ptaci,0.041689
+1,36,ptaci,0
+1,37,ptaci,0.223962
+1,38,ptaci,0
+1,39,ptaci,0.030092
+1,40,ptaci,0.008096
+1,41,ptaci,0.055271
+1,42,ptaci,0.058148
+1,43,ptaci,0.032852
+1,44,ptaci,0.000417
+1,45,ptaci,0
+1,46,meja a ptaci,0
+1,47,meja a ptaci,0.06884
+1,48,meja a ptaci,0
+1,49,meja a ptaci,0.185743
+1,50,meja a ptaci,0.006225
+1,51,meja a ptaci,0
+1,52,meja a ptaci,0.085034
+1,53,meja a ptaci,0
+1,54,meja a ptaci,0
+1,55,meja a ptaci,0.18986
+1,56,meja a ptaci,0.000751
+1,57,meja a ptaci,0.046608
+1,58,meja a ptaci,0.008867
+1,59,meja a ptaci,0
+1,60,meja a ptaci,0.029277
+2,1,meja,0.007304
+2,2,meja,0
+2,3,meja,0.301213
+2,4,meja,0.480762
+2,5,meja,0.198076
+2,6,meja,0.050282
+2,7,meja,0.017303
+2,8,meja,0.048374
+2,9,meja,0.028811
+2,10,meja,0.022399
+2,11,meja,0.106782
+2,12,meja,0.002473
+2,13,meja,0
+2,14,meja,0.068043
+2,15,meja,0.027357
+2,16,kontrola,0.007145
+2,17,kontrola,0.248196
+2,18,kontrola,0.155853
+2,19,kontrola,0.053888
+2,20,kontrola,0.000518
+2,21,kontrola,0.085243
+2,22,kontrola,0.568021
+2,23,kontrola,0.114145
+2,24,kontrola,0.068344
+2,25,kontrola,0.035947
+2,26,kontrola,0.083724
+2,27,kontrola,0.23544
+2,28,kontrola,0.028551
+2,29,kontrola,0.047452
+2,30,kontrola,0.055871
+2,31,ptaci,0.104057
+2,32,ptaci,0.058811
+2,33,ptaci,0.101438
+2,34,ptaci,0.057909
+2,35,ptaci,0.072613
+2,36,ptaci,0.503122
+2,37,ptaci,0.272453
+2,38,ptaci,0.280547
+2,39,ptaci,0.362592
+2,40,ptaci,0.582573
+2,41,ptaci,0.283171
+2,42,ptaci,0.116918
+2,43,ptaci,0.384107
+2,44,ptaci,0.17198
+2,45,ptaci,0.243394
+2,46,meja a ptaci,0.008417
+2,47,meja a ptaci,0.180848
+2,48,meja a ptaci,0.030201
+2,49,meja a ptaci,0.281952
+2,50,meja a ptaci,0.057308
+2,51,meja a ptaci,0.111641
+2,52,meja a ptaci,0.073469
+2,53,meja a ptaci,0.076743
+2,54,meja a ptaci,0.027477
+2,55,meja a ptaci,0.152258
+2,56,meja a ptaci,0.018727
+2,57,meja a ptaci,0.202705
+2,58,meja a ptaci,0.079192
+2,59,meja a ptaci,0.060176
+2,60,meja a ptaci,0.071346

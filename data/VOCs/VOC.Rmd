@@ -1,0 +1,303 @@
+---
+title: "VOC"
+author: "Anna Mrazova"
+date: "2025-04-08"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+# Loading Data and libraries
+## Formating
+```{r Data and libraries}
+library(readxl)
+library(tidyverse)
+library(lme4)
+library(lmerTest)
+library(emmeans)
+library(glmmTMB)
+library(FactoMineR)
+library(factoextra)
+library(MuMIn)
+library(e1071)
+library(lmtest)
+library(DHARMa)
+library(dplyr)
+library(ggplot2)
+library(vegan)
+library(broom)
+library(pheatmap)
+
+setwd("C:/Users/annam/OneDrive - Biologické centrum AV ČR, v. v. i/Anawork/Students/Diana Tomandlova/Bakalarka/data")
+comp_all <- read_excel("250404_Tomandlova_BP_VOC_Results.xlsx", sheet = "Results")
+
+# Pivot to long format
+comp_all_long <- comp_all %>%
+  pivot_longer(
+    cols = 5:ncol(.),
+    names_to = "Compound",
+    values_to = "Peak"
+  ) %>%
+  # Extract treatment (non-numeric) 
+  mutate(treatment = str_extract(Desig, "^[^0-9]+"))
+
+# Recode 'Bag' into actual numeric days
+comp_all_long <- comp_all_long %>%
+  mutate(
+    Day = recode(as.character(Bag),
+                 "1" = 0,
+                 "2" = 15,
+                 "3" = 30)
+  )
+```
+
+## 1) Effect of treatment and day on overall VOC production
+```{r Overall VOC production}
+
+comp_all_long <- comp_all_long %>%
+  group_by(treatment, Desig, Day) %>%
+  summarise(total_peak = sum(Peak, na.rm = TRUE), .groups = "drop")
+
+tr_bag <- lmer(total_peak ~ treatment * Day + (1|Desig), data = comp_all_long)
+tr_bag_tmb <- glmmTMB(total_peak ~ treatment * Day + (1|Desig), data = comp_all_long, family = Gamma)
+
+# We have too small sample size so the random effects make mess... Thus,
+# we go for simple linear model:
+
+full_model <- lm(total_peak ~ treatment * Day, data = comp_all_long)
+```
+
+### Diagnostics checks
+```{r Diagnostic checks}
+par(mfrow = c(2, 2))
+plot(full_model)  # Residuals vs fitted, QQ-plot, etc.
+skewness(residuals(full_model))  # Near 0 is best
+shapiro.test(residuals(full_model))
+bptest(full_model)  # Breusch-Pagan test
+sim_res <- simulateResiduals(fittedModel = full_model, plot = TRUE)
+```
+
+#### Given the results, we have to log transform the data as normality: dispersion, residuals vs. fitted values and homoscedasticity is violated
+
+### Data transformation and diagnostics
+```{r Data log transform}
+comp_all_long$total_peak_log <- log1p(comp_all_long$total_peak)
+
+full_model_log <- lm(total_peak_log ~ treatment * Day, data = comp_all_long)
+
+par(mfrow = c(2, 2))
+plot(full_model_log) 
+skewness(residuals(full_model_log))
+shapiro.test(residuals(full_model_log))
+bptest(full_model_log)
+sim_res <- simulateResiduals(fittedModel = full_model_log, plot = TRUE)
+```
+
+#### Log transformation helped. We can continue with log-transformed data:
+
+### Variable selection and model averaging
+```{r}
+options(na.action = "na.fail")
+model_set_log <- dredge(full_model_log, subset = TRUE)
+avg_model_log <- model.avg(model_set_log, subset = delta < 2)
+summary(avg_model_log)
+#Effect size:
+exp(1.67)       # Effect of MeJA
+exp(1.43)       # Effect of MeJA + Ptáci
+```
+#### We will interpret the data based on model averaging because:
+#### **1)** There are two plausible models (ΔAICc < 2),
+#### **2)** Our top model has less than ~70% weight,
+#### **3)** We want to account for model uncertainty.
+
+#### **Results:**
+#### **1)** Day has a weak possitive effect on VOC production
+#### **2)** MeJA treatment increases VOCs by 5.3 compared to Control (K)
+#### **3)** MeJA + Ptáci also increases VOCs (by 4.2)
+
+### Visualization 1
+```{r Plot1}
+# Summarize by treatment and day
+summary_df <- comp_all_long %>%
+  group_by(Day, treatment) %>%
+  summarise(
+    mean_peak = mean(total_peak, na.rm = TRUE),
+    se_peak = sd(total_peak, na.rm = TRUE) / sqrt(n()),
+    .groups = "drop"
+  )
+# Plot
+voc_tr_day <- ggplot(summary_df, aes(x = Day, y = mean_peak, 
+                                     color = treatment, fill = treatment)) +
+  geom_jitter(data = comp_all_long, 
+              aes(x = Day, y = total_peak, color = treatment),
+              width = 1.5, height = 0, alpha = 0.4, size = 1.5, inherit.aes = FALSE) +
+  geom_line(size = 1.2) +
+  geom_ribbon(aes(ymin = mean_peak - se_peak, ymax = mean_peak + se_peak),
+              alpha = 0.2, color = NA) +
+  geom_point(size = 3, shape = 21, fill = "white") +
+  labs(x = "Den", y = "Suma VOC",
+       title = "Efekt ošetření a času na celkovou produkci VOC") +
+  theme_minimal() +
+  theme(
+    axis.line = element_line(linewidth = 1, colour = "black"),
+    axis.title.x = element_text(size = 20, face = "bold"),
+    axis.title.y = element_text(size = 20, face = "bold"),
+    axis.text = element_text(size = 18),
+    plot.title = element_text(hjust = 0.5, size = 24, face = "bold")
+  ) +
+  scale_color_manual(values = c(
+    "P" = "orange",
+    "K" = "#2F80ED",
+    "M+P" = "black",
+    "M" = "red")
+  ) +
+  scale_fill_manual(values = c(
+    "P" = "orange",
+    "K" = "#2F80ED",
+    "M+P" = "black",
+    "M" = "red")
+  )
+
+print(voc_tr_day)
+```
+
+## 2) RD Analysis: differences in VOC profiles (qualitative)
+### Data
+```{r data}
+comp_all <- read_excel("250404_Tomandlova_BP_VOC_Results.xlsx", sheet = "Results")
+
+# Pivot back to wide
+comp_wide <- comp_all %>%
+  pivot_longer(cols = 5:ncol(.), names_to = "Compound", values_to = "Peak") %>%
+  mutate(
+    treatment = str_extract(Desig, "^[^0-9]+"),
+    Day = recode(as.character(Bag), "1" = 0, "2" = 15, "3" = 30)
+  ) %>%
+  pivot_wider(names_from = Compound, values_from = Peak, values_fill = 0)
+
+# VOCs only
+voc_matrix <- comp_wide %>%
+  select(-c(Desig, Bag, treatment, Day))
+
+metadata <- comp_wide %>%
+  select(Desig, treatment, Day) %>%
+  mutate(treatment = factor(treatment),
+         Day = as.numeric(Day))
+```
+
+### Helliger transformation and results
+```{r Hell results}
+voc_hell <- decostand(voc_matrix, method = "hellinger")
+
+rda_model <- rda(voc_hell ~ treatment * Day, data = metadata)
+summary(rda_model)
+anova(rda_model, by = "terms", permutations = 999)
+```
+#### **Results:**
+#### The whole model is significant -> VOC comopsition differs between treatments and/or time of sampling
+#### The overall explained variance: ~40 % (constrained inertia = 0.102 / total = 0.2545)
+
+#### Treatment: p < 0.001 -> has a significant effect on VOC composition
+#### Day: p < 0.001 -> Sampling time also significantly contributes ti changes in VOC composition
+
+### Visualization 2
+```{r Plot2}
+treatment_cols <- c(
+  "K" = "#2F80ED",
+  "M" = "red",
+  "M+P" = "black",
+  "P" = "orange"  
+)
+
+par(mfrow = c(1, 1))
+plot(rda_model, type = "n", scaling = 2, main = "RDA – složení VOC")
+points(rda_model, display = "sites",
+       col = treatment_cols[metadata$treatment],
+       pch = 19)
+ordihull(rda_model, groups = metadata$treatment, draw = "polygon",
+         col = treatment_cols, 
+         border = treatment_cols, 
+         lwd = 2, alpha = 80)
+legend("topright", legend = names(treatment_cols), 
+       col = treatment_cols, pch = 19, bty = "n", title = "Ošetření")
+```
+
+## 3) Effect of treatment and time on individual compounds
+### Data
+```{r}
+comp_all <- read_excel("250404_Tomandlova_BP_VOC_Results.xlsx", sheet = "Results")
+
+comp_long <- comp_all %>%
+  pivot_longer(cols = 5:ncol(.), names_to = "Compound", values_to = "Peak") %>%
+  mutate(
+    treatment = str_extract(Desig, "^[^0-9]+"),
+    Day = recode(as.character(Bag), "1" = 0, "2" = 15, "3" = 30),
+    treatment = factor(treatment),
+    Day = as.numeric(Day)
+  )
+```
+
+### LM models for each compound
+```{r LM models}
+
+model_list <- comp_long %>%
+  group_by(Compound) %>%
+  group_map(~ lm(log1p(Peak) ~ treatment * Day, data = .x), .keep = TRUE)
+
+names(model_list) <- unique(comp_long$Compound)
+```
+
+### Heatmap
+```{r Heatmap}
+model_results <- purrr::map_df(model_list, tidy, .id = "Compound") %>%
+  filter(term %in% c("treatmentM", "treatmentP", "treatmentM+P", "Day",
+                     "treatmentM:Day", "treatmentP:Day", "treatmentM+P:Day"))
+estimates <- model_results %>%
+  select(Compound, term, estimate) %>%
+  pivot_wider(names_from = term, values_from = estimate)
+
+pvals <- model_results %>%
+  select(Compound, term, p.value) %>%
+  pivot_wider(names_from = term, values_from = p.value)
+
+annot <- as.matrix(pvals[,-1])
+annot_stars <- ifelse(annot < 0.05, "*", "")
+annot_combined <- matrix(paste0(round(annot, 3), annot_stars), 
+                         nrow = nrow(annot), dimnames = dimnames(annot))
+
+pheatmap(as.matrix(estimates[,-1]),
+         cluster_rows = FALSE,
+         cluster_cols = FALSE,
+         main = "Heatmapa účinků ošetření a času na jednotlivé sloučeniny (log)",
+         display_numbers = annot_combined,
+         color = colorRampPalette(c("blue", "white", "red"))(100),
+         fontsize_number = 9,
+         labels_row = estimates$Compound)
+```
+
+### **Results:**
+#### For each of the 36 detected volatile organic compounds (VOCs), we fitted a linear model with the predictors treatment * Day using log-transformed response values (log1p(Peak)) to assess how individual compounds changed over time and in response to treatment.
+
+#### The results were visualized using a heatmap showing the direction and magnitude of the estimated effects (red = positive effect, blue = negative effect), with p-values displayed as numerical annotations.
+
+#### **1)** Strong and statistically significant effects were observed primarily for the MeJA and MeJA + ptáci treatments.
+
+#### **2)** The most strongly affected compounds included Methyl salicylate, Unknown11, Unknown12, Alkane2, Caryophyllene, and Copaene.
+
+#### **3)** The bird treatment alone (treatmentP) did not show any consistent effect on individual VOC production.
+
+#### The table below summarizes the 25 most significantly affected compounds (p < 0.05), including the direction and magnitude of the treatment effects (on the log scale):
+
+### Significantly different compounds per treatment
+```{r Table results}
+signif_effects <- c("treatmentM", "treatmentM+P")
+
+significant_compounds_selected <- model_results %>%
+  filter(term %in% signif_effects, p.value < 0.05) %>%
+  select(Compound, term, estimate, p.value) %>%
+  arrange(term, p.value)
+
+print(significant_compounds_selected, n = 25)
+```

@@ -1,0 +1,205 @@
+---
+title: "Arthropods"
+author: "Anna Mrazova"
+date: "2025-03-11"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+# Used libraries
+
+```{r libraries}
+library(tidyverse)
+library(lme4)
+library(performance)
+library(dplyr)
+library(ggplot2)
+library(emmeans)
+library(tidyr)
+library(multcompView)
+library(multcomp)
+library(DHARMa)
+library(nlme)
+library (glmmTMB)
+library(boot)
+library(parallel)
+```
+
+# Data
+
+```{r data}
+setwd("C:/Users/annam/OneDrive - Biologické centrum AV ČR, v. v. i/Anawork/Students/Diana Tomandlova/Bakalarka/data")
+hmyz <- read.csv2("hmyz.csv", fileEncoding = "latin1", stringsAsFactors = FALSE)
+```
+
+# 1) Variation
+#### as the first assessment of the abundance of different arthropod guilds was performed before the treatments application, we can only check for the variation between the trees (all of them regardless the treatment).
+
+```{r variation}
+pre_treatment <- hmyz %>% filter(cas == "zacatek")
+
+pre_treatment_tree <- pre_treatment %>%
+  group_by(strom) %>%
+  summarise(total_abundance = sum(pocet))
+summary(pre_treatment_tree$total_abundance)
+
+ggplot(pre_treatment_tree, aes(x = "", y = total_abundance)) +
+  geom_boxplot() +
+  theme_minimal() +
+  labs(title = "Variation in arthropod abundance per tree",
+       y = "Total abundance", x = "")
+
+ggplot(pre_treatment_tree, aes(x = total_abundance)) +
+  geom_histogram(bins = 15, fill = "steelblue", color = "black") +
+  theme_minimal() +
+  labs(title = "Distribution of arthropod abundance across trees",
+       x = "Total arthropod count", y = "Number of trees")
+
+sd(pre_treatment_tree$total_abundance)
+pre_tree <- lm(total_abundance ~ 1, data = pre_treatment_tree)
+summary(pre_tree)
+
+var_between_trees <- var(pre_treatment_tree$total_abundance)
+var_residual <- summary(pre_tree)$sigma^2
+icc <- var_between_trees / (var_between_trees + var_residual)
+icc
+
+icc_results <- pre_treatment %>%
+  group_by(guildy) %>%
+  summarise(
+    var_between = var(tapply(pocet, strom, sum)),  
+    var_residual = summary(lm(pocet ~ 1, data = .))$sigma^2,  
+    ICC = var_between / (var_between + var_residual)  
+  )
+print(icc_results)
+```
+
+## Variation summary
+
+### Variation metrics
+#### Mean Abundance per tree (Intercept)	7.57 ->	on average, each tree had ~7.6 arthropods before treatment.
+#### Standard Deviation (sd)	6.53
+#### There's a high spread in arthropod counts across trees.
+#### Residual Standard Error	6.529	Similar to the standard deviation, confirming high variation.
+#### Min/Max Residuals	-5.57 to +32.43	Some trees have far fewer or many more arthropods than the mean.
+
+### Interclass coefficient (ICC)
+#### Interclass Correlation Coefficient (ICC) = 0.5, meaning 50% of the total variance in arthropod abundance is due to differences between trees, while the remaining 50% is within-tree variation.
+
+### ICC for each Guild
+#### **mízu sající členovci** depend most on tree identity: 71% of their variation comes from tree-level differences. THEY drive the variability the most.
+#### **Predatori and listozravci** Show Moderate Tree-Level Variation: ICC = 37–39% → Some trees consistently host more predators or herbivores than others. It's cool that they follow similar patterns.
+#### **ostatní** are more evenly spread across trees: ICC = 14% → Most variation is within trees, not between them.
+
+# 2) The effect of treatment on the abundance
+
+## Work with data
+
+```{r work with data}
+post_treatment <- hmyz %>% filter(cas == "konec")
+
+post_treatment_tree <- post_treatment %>%
+  group_by(strom, treatment) %>% 
+  summarise(total_abundance = sum(pocet), .groups = "drop")
+```
+
+## Fitting a model
+
+```{r fitting a model}
+post_model <- glmer(pocet ~ treatment + (1|strom), 
+                         data = post_treatment, 
+                         family = poisson (link = "log"))
+# Model diagnosis checks:
+simulationOutput <- simulateResiduals(fittedModel = post_model, n = 1000)
+plot(simulationOutput)
+testDispersion(simulationOutput)
+
+# Are the data clustered?
+mean_pocet <- mean(post_treatment$pocet)
+var_pocet <- var(post_treatment$pocet)
+overdispersion_ratio <- var_pocet / mean_pocet
+print(overdispersion_ratio)
+
+# YES
+# -> we should go for negative binomial distribution:
+
+nb_model <- glmmTMB(pocet ~ treatment + (1|strom), 
+                        data = post_treatment, 
+                        family = nbinom2)
+# Cheks:
+
+simulationOutput1 <- simulateResiduals(fittedModel = nb_model, n = 1000)
+plot(simulationOutput1)
+testDispersion(simulationOutput1)
+```
+
+## Model selection
+
+```{r model selection}
+full <- glmmTMB(pocet ~ treatment * guildy + (1|strom),
+                data = post_treatment,
+                family = nbinom2)
+
+reduced1 <- update(full, . ~ . - treatment)                 
+reduced2 <- update(full, . ~ . - guildy)              
+reduced3 <- update(full, . ~ . - treatment:guildy)             
+null <- glmmTMB(pocet ~ 1 + (1|strom),  
+                data = post_treatment, family = nbinom2)
+
+models_list <- list(full, reduced1, reduced2, reduced3, null)
+
+model_selection <- model.sel(models_list, rank = AICc)
+print(model_selection)
+```
+
+## Full model chosen
+
+```{r model full}
+post_model_guild <- glmmTMB(pocet ~ treatment * guildy + (1|strom),
+                            data = post_treatment,
+                            family = nbinom2)
+
+simulationOutput2 <- simulateResiduals(fittedModel = post_model_guild, n = 1000)
+plot(simulationOutput2)
+testDispersion(simulationOutput2)
+
+summary(post_model_guild)
+```
+
+## Visualisation
+
+```{r visualization}
+# visualisation
+ggplot(post_treatment, aes(x = treatment, y = pocet, fill = guildy)) +
+  geom_boxplot() +
+  theme_minimal() +
+  labs(title = "Effect of treatment on arthropod guilds", x = "Treatment", y = "Abundance")
+```
+
+## The effect of treatment on the abundance summary
+
+### Models fitting
+#As we know from the very first steps, the variation for each guild differs significantly, this may be why we cannot fit the model properly... We know, that sap-suckers are driving the unewual variability, so... we have to comment on it in the disscussion.
+
+### Fixed Effects: Main treatment effects
+#### **Intercept** (Baseline group: control treatment & baseline guild): Estimate = 0.738 → The baseline abundance (log-transformed) is ~0.738. Highly significant (p < 0.001), meaning there is a clear presence of arthropods in the control.
+
+### The effect of treatment
+#### **MeJA** Estimate = -0.092, p = 0.706 → No significant effect of MeJA alone on arthropod abundance.
+#### **MeJA + ptaci** Estimate = -0.584, p = 0.017 → Significant decrease in arthropod abundance under MeJA + Birds. Suggests that bird exclusion and MeJA application significantly reduces arthropods.
+#### **Ptaci** Estimate = -0.195, p = 0.425 → No significant effect of birds alone on arthropods.
+
+### Fixed Effects: Arthropod Guilds
+#### **Mizu sajici clenovci** Estimate = 0.244, p = 0.317 → Not significantly different from the baseline group.
+#### **Ostatni** Estimate = -0.380, p = 0.120 → not statistically significant.
+#### **Predatori** Estimate = 0.460, p = 0.060 → A marginally significant increase in predators.
+
+### Interaction effects: treatment × arthropod Guild
+#### **MeJA + Birds × Sap-sucking** Estimate = 1.023, p = 0.003 → Strongly significant increase in sap-sucking arthropods under MeJA + Birds. Suggests MeJA attracts sap suckers in favor of other guilds.
+#### **MeJA + Birds × Predators** Estimate = 0.848, p = 0.015 → Significant increase in predators when MeJA is applied and birds are missing from the system. Suggests mesopredator release effect and/or predatory arthropods are attracted by MeJA.
+
+### Conclusions:
+#### The results suggest that the combined effects of MeJA + Birds significantly reduce total arthropod abundance, but sap-feeders and predators increase under this treatment -> **Mesopredator release effect + affinity of predators and sap-succkers to VOCs**
